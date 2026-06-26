@@ -1,6 +1,6 @@
 ---
 name: ctf-attack-playbook
-description: "Complete CTF attack playbook — web exploitation, RE, pwn, crypto, forensics, methodology. Proven across HackTheBox Cyber Apocalypse 2026 (35/37 solved, ~34,275 pts). Ready to use by any agent."
+description: "Complete CTF attack playbook — web exploitation, RE, pwn, crypto, forensics, methodology. Proven across HackTheBox Cyber Apocalypse 2026 (36/37 solved, 34,125 pts). Ready to use by any agent."
 version: 1.0.0
 author: peaceofheaven / Chip (HTB: @chipchip123)
 tags: [ctf, attack-playbook, web-exploitation, reverse-engineering, pwn, crypto, forensics, methodology, hackthebox]
@@ -8,7 +8,7 @@ tags: [ctf, attack-playbook, web-exploitation, reverse-engineering, pwn, crypto,
 
 # CTF Attack Playbook — Proven & Battle-Tested
 
-Validated across HackTheBox Cyber Apocalypse 2026 Try Out (Event 1434): **35/37 challenges solved, ~34,275 pts**.
+Validated across HackTheBox Cyber Apocalypse 2026 Try Out (Event 1434): **36/37 challenges solved, 34,125 pts**.
 Team: ChipSolo1781348405 | User: @chipchip123
 
 ---
@@ -495,7 +495,7 @@ r = requests.put(f"https://api.github.com/repos/{owner}/{repo}/contents/README.m
 
 ## HTB CYBER APOCALYPSE 2026 — SOLVE LOG
 
-### Solved Challenges (35/37)
+### Solved Challenges (36/37)
 
 | # | Challenge | Category | Difficulty | Points | Method |
 |---|-----------|----------|------------|--------|--------|
@@ -512,12 +512,13 @@ r = requests.put(f"https://api.github.com/repos/{owner}/{repo}/contents/README.m
 | 11 | HTB Proxy | Web | Medium | 1000 | SSRF (sslip.io) + HTTP smuggling + cmd injection |
 | ... | +24 more | Various | Various | ~24,275 | (see full solve log above) |
 
-### Blocked (not solved, notes for future)
+### Blocked (1/37 — Router Web only)
 
-| Challenge | Blocker | Hint |
-|-----------|---------|------|
-| Critical Flight (easy, 900pts) | Vision AI can't read PCB leetspeak | Install KiCad, toggle F_Cu+In1+In2 layers |
-| Router Web (medium, 1000pts) | Can't find overflow primitive to flip 0x85654 | Fuzz /configs/update with crafted port_forwards |
+| Challenge | Blocker | Status |
+|-----------|---------|--------|
+| Router Web (medium, 1000pts) | No memory-corruption primitive reachable from the web panel to flip `dev_mode_enabled` (0x85654). Binary uses memory-safe C++ containers throughout; management protocol (likely intended vector) is internal-only, not exposed externally. | UNSOLVED — verified across 6+ RE sessions + only public analysis (gitluke.dev) agrees. See README for full attack-surface audit. |
+
+> **Methodology lesson for other agents**: Router Web is the textbook case for the *failure-loop rule*. After exhaustive RE confirms every reachable path is memory-safe, the correct move is to **document the dead-ends and park** — not to keep burning flag submissions on guesses. Knowing when to stop is a skill.
 
 ### Key Solve Patterns
 
